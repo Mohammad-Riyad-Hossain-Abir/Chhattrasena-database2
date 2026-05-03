@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>বাংলাদেশ ইসলামী ছাত্রসেনা - নিবন্ধন পোর্টাল</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- React & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  
+  <!-- Babel for JSX transpilation in browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0a1628;
+      font-family: 'Noto Serif Bengali', serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const BKASH_NUMBER = "01521788397";
+    const LOGO_B64 = "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";
+
+    const initialForm = {
+      name: "", fatherName: "", email: "",
+      presentAddress: "", permanentAddress: "",
+      branch: "", designation: "",
+      presidentName: "", presidentPhone: "",
+      photo: null, photoPreview: null,
+      isFollower: "",
+      bkashAmount: "", transactionId: "", transactionDate: "",
+    };
+
+    const designations = [
+      "সভাপতি","সহ-সভাপতি","সাধারণ সম্পাদক","সহ-সাধারণ সম্পাদক",
+      "সাংগঠনিক সম্পাদক","অর্থ সম্পাদক","প্রচার সম্পাদক","সাংস্কৃতিক সম্পাদক",
+      "সদস্য","কর্মী","অন্যান্য"
+    ];
+
+    function generateUID() {
+      return "ICS-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).substr(2,4).toUpperCase();
+    }
+
+    // Dummy local storage implementation for standalone mode
+    const dummyStorage = {
+      data: {},
+      get: async (key) => ({ value: localStorage.getItem(key) }),
+      set: async (key, value) => { localStorage.setItem(key, value); }
+    };
+
+    // Use actual window.storage if available, otherwise fallback to dummyStorage (localStorage)
+    const storage = window.storage || dummyStorage;
+
+    function AdminPanel({ members, onBack, onConfirmPayment }) {
+      const [search, setSearch] = useState("");
+      const [tab, setTab] = useState("pending");
+      const confirmed = members.filter(m => m.paymentConfirmed);
+      const pending = members.filter(m => !m.paymentConfirmed);
+      const list = tab === "confirmed" ? confirmed : pending;
+      const filtered = list.filter(m =>
+        m.name?.toLowerCase().includes(search.toLowerCase()) ||
+        m.branch?.toLowerCase().includes(search.toLowerCase()) ||
+        m.uid?.toLowerCase().includes(search.toLowerCase())
+      );
+
+      return (
+        <div style={{ minHeight:"100vh", background:"#0a1628", padding:"24px", fontFamily:"'Noto Serif Bengali',serif" }}>
+          <div style={{ maxWidth:1100, margin:"0 auto" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:24 }}>
+              <button onClick={onBack} style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", color:"#e2c97e", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:"inherit", fontSize:14 }}>← ফিরে যান</button>
+              <h2 style={{ color:"#e2c97e", margin:0, fontSize:20 }}>অ্যাডমিন ড্যাশবোর্ড</h2>
+              <div style={{ marginLeft:"auto", display:"flex", gap:8 }}>
+                <span style={{ background:"#1a3a5c", color:"#7fc8f8", padding:"4px 14px", borderRadius:20, fontSize:13 }}>মোট: {members.length}</span>
+                <span style={{ background:"#1a3a1a", color:"#5dde8a", padding:"4px 14px", borderRadius:20, fontSize:13 }}>নিশ্চিত: {confirmed.length}</span>
+                <span style={{ background:"#3a2a10", color:"#f8c87e", padding:"4px 14px", borderRadius:20, fontSize:13 }}>অপেক্ষমাণ: {pending.length}</span>
+              </div>
+            </div>
+
+            <div style={{ display:"flex", gap:8, marginBottom:16 }}>
+              {["pending","confirmed"].map(t => (
+                <button key={t} onClick={()=>setTab(t)} style={{
+                  padding:"8px 20px", borderRadius:8, cursor:"pointer", fontFamily:"inherit", fontSize:14,
+                  background: tab===t ? "linear-gradient(135deg,#c8a84b,#e2c97e)" : "rgba(255,255,255,0.07)",
+                  border: tab===t ? "none" : "1px solid rgba(255,255,255,0.15)",
+                  color: tab===t ? "#0a1628" : "#ccc", fontWeight: tab===t ? "bold" : "normal"
+                }}>
+                  {t==="pending" ? `⏳ অপেক্ষমাণ (${pending.length})` : `✅ নিশ্চিত (${confirmed.length})`}
+                </button>
+              ))}
+            </div>
+
+            <input placeholder="নাম, শাখা বা আইডি দিয়ে খুঁজুন..." value={search} onChange={e=>setSearch(e.target.value)}
+              style={{ width:"100%", padding:"10px 16px", borderRadius:8, marginBottom:16, background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.15)", color:"#fff", fontFamily:"inherit", fontSize:14, boxSizing:"border-box" }}/>
+
+            {filtered.length === 0 ? (
+              <div style={{ textAlign:"center", color:"#888", padding:60, fontSize:18 }}>কোনো তথ্য পাওয়া যায়নি</div>
+            ) : (
+              <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+                {filtered.map((m,i) => (
+                  <div key={i} style={{ background:"linear-gradient(135deg,#0f2340,#152d4a)", border:`1px solid ${m.paymentConfirmed?"rgba(93,222,138,0.3)":"rgba(248,200,126,0.3)"}`, borderRadius:12, padding:18, display:"grid", gridTemplateColumns:"72px 1fr 1fr 1fr", gap:14, alignItems:"start" }}>
+                    <div>
+                      {m.photoPreview ? (
+                        <img src={m.photoPreview} alt="ছবি" style={{ width:64, height:64, borderRadius:8, objectFit:"cover", border:"2px solid #e2c97e" }}/>
+                      ) : (
+                        <div style={{ width:64, height:64, borderRadius:8, background:"#1a3a5c", display:"flex", alignItems:"center", justifyContent:"center", color:"#7fc8f8", fontSize:24 }}>👤</div>
+                      )}
+                      <div style={{ fontSize:10, color:"#888", marginTop:4, textAlign:"center", wordBreak:"break-all" }}>{m.uid}</div>
+                    </div>
+                    <div>
+                      <div style={{ color:"#e2c97e", fontWeight:"bold", fontSize:15, marginBottom:3 }}>{m.name}</div>
+                      <div style={{ color:"#aac8e8", fontSize:12 }}>পিতা: {m.fatherName}</div>
+                      <div style={{ color:"#7fc8f8", fontSize:12 }}>পদবী: {m.designation}</div>
+                      <div style={{ color:"#aac8e8", fontSize:12 }}>শাখা: {m.branch}</div>
+                      <div style={{ color:"#888", fontSize:11, marginTop:2 }}>ইমেইল: {m.email}</div>
+                    </div>
+                    <div>
+                      <div style={{ color:"#ccc", fontSize:11, marginBottom:2 }}><span style={{ color:"#888" }}>বর্তমান: </span>{m.presentAddress}</div>
+                      <div style={{ color:"#ccc", fontSize:11, marginBottom:2 }}><span style={{ color:"#888" }}>স্থায়ী: </span>{m.permanentAddress}</div>
+                      <div style={{ color:"#ccc", fontSize:11 }}><span style={{ color:"#888" }}>সভাপতি: </span>{m.presidentName} ({m.presidentPhone})</div>
+                      <span style={{ background:m.isFollower==="হ্যাঁ"?"#1a4a2a":"#3a1a1a", color:m.isFollower==="হ্যাঁ"?"#5dde8a":"#f87171", padding:"2px 8px", borderRadius:20, fontSize:11, marginTop:4, display:"inline-block" }}>অনুগামী: {m.isFollower}</span>
+                    </div>
+                    <div>
+                      <div style={{ background:"rgba(226,201,126,0.08)", border:"1px solid rgba(226,201,126,0.2)", borderRadius:8, padding:"10px 12px", marginBottom:8 }}>
+                        <div style={{ color:"#e2c97e", fontSize:12, fontWeight:"bold", marginBottom:3 }}>💳 বিকাশ</div>
+                        <div style={{ color:"#aac8e8", fontSize:12 }}>পরিমাণ: ৳{m.bkashAmount}</div>
+                        <div style={{ color:"#ccc", fontSize:11 }}>TX: {m.transactionId}</div>
+                        <div style={{ color:"#888", fontSize:11 }}>{m.transactionDate}</div>
+                      </div>
+                      {m.paymentConfirmed ? (
+                        <div style={{ background:"#1a4a2a", color:"#5dde8a", padding:"6px 12px", borderRadius:8, fontSize:12, textAlign:"center" }}>✅ পেমেন্ট নিশ্চিত</div>
+                      ) : (
+                        <button onClick={()=>onConfirmPayment(m.uid)} style={{ width:"100%", background:"linear-gradient(135deg,#c8a84b,#e2c97e)", border:"none", color:"#0a1628", padding:"8px 12px", borderRadius:8, cursor:"pointer", fontFamily:"inherit", fontSize:13, fontWeight:"bold" }}>✅ পেমেন্ট নিশ্চিত করুন</button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const [form, setForm] = useState(initialForm);
+      const [members, setMembers] = useState([]);
+      const [view, setView] = useState("form");
+      const [errors, setErrors] = useState({});
+      const [adminPass, setAdminPass] = useState("");
+      const [showAdminLogin, setShowAdminLogin] = useState(false);
+      const [adminError, setAdminError] = useState("");
+      const [submittedUID, setSubmittedUID] = useState("");
+
+      useEffect(() => {
+        (async () => {
+          try {
+            const res = await storage.get("ics_members_v2");
+            if (res?.value) setMembers(JSON.parse(res.value));
+          } catch {}
+        })();
+      }, []);
+
+      const saveMembers = async (list) => {
+        try { await storage.set("ics_members_v2", JSON.stringify(list)); } catch {}
+      };
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm(f => ({ ...f, [name]: value }));
+        setErrors(er => ({ ...er, [name]: "" }));
+      };
+
+      const handlePhoto = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => setForm(f => ({ ...f, photo: file.name, photoPreview: ev.target.result }));
+        reader.readAsDataURL(file);
+      };
+
+      const validate = () => {
+        const e = {};
+        if (!form.name.trim()) e.name = "নাম আবশ্যক";
+        if (!form.fatherName.trim()) e.fatherName = "পিতার নাম আবশ্যক";
+        if (!form.email.trim()) e.email = "ইমেইল আবশ্যক";
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "সঠিক ইমেইল দিন";
+        if (!form.presentAddress.trim()) e.presentAddress = "বর্তমান ঠিকানা আবশ্যক";
+        if (!form.permanentAddress.trim()) e.permanentAddress = "স্থায়ী ঠিকানা আবশ্যক";
+        if (!form.branch.trim()) e.branch = "শাখার নাম আবশ্যক";
+        if (!form.designation) e.designation = "পদবী নির্বাচন করুন";
+        if (!form.presidentName.trim()) e.presidentName = "সভাপতির নাম আবশ্যক";
+        if (!form.presidentPhone.trim()) e.presidentPhone = "সভাপতির নম্বর আবশ্যক";
+        if (!form.isFollower) e.isFollower = "অনুগামী কিনা নির্বাচন করুন";
+        if (!form.transactionId.trim()) e.transactionId = "ট্রানজেকশন নম্বর আবশ্যক";
+        if (!form.bkashAmount.trim()) e.bkashAmount = "টাকার পরিমাণ আবশ্যক";
+        if (!form.transactionDate.trim()) e.transactionDate = "তারিখ আবশ্যক";
+        return e;
+      };
+
+      const handleSubmit = async () => {
+        const e = validate();
+        if (Object.keys(e).length > 0) { setErrors(e); return; }
+        const uid = generateUID();
+        const newMember = { ...form, uid, paymentConfirmed: false, submittedAt: new Date().toLocaleString("bn-BD") };
+        const updated = [...members, newMember];
+        setMembers(updated);
+        await saveMembers(updated);
+        setSubmittedUID(uid);
+        setForm(initialForm);
+        setView("pending");
+      };
+
+      const handleConfirmPayment = async (uid) => {
+        const updated = members.map(m => m.uid === uid ? { ...m, paymentConfirmed: true } : m);
+        setMembers(updated);
+        await saveMembers(updated);
+      };
+
+      const handleAdminLogin = () => {
+        if (adminPass === "admin1234") {
+          setView("admin"); setShowAdminLogin(false); setAdminPass(""); setAdminError("");
+        } else { setAdminError("ভুল পাসওয়ার্ড!"); }
+      };
+
+      if (view === "admin") return <AdminPanel members={members} onBack={()=>setView("form")} onConfirmPayment={handleConfirmPayment}/>;
+
+      if (view === "pending") return (
+        <div style={{ minHeight:"100vh", background:"#0a1628", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"'Noto Serif Bengali',serif" }}>
+          <div style={{ background:"linear-gradient(135deg,#0f2340,#152d4a)", border:"2px solid rgba(248,200,126,0.4)", borderRadius:20, padding:48, textAlign:"center", maxWidth:440 }}>
+            <div style={{ fontSize:56, marginBottom:16 }}>⏳</div>
+            <h2 style={{ color:"#f8c87e", fontSize:22, marginBottom:12 }}>কনফার্মেশনের জন্য সিরিয়ালে আছেন</h2>
+            <p style={{ color:"#aac8e8", fontSize:14, lineHeight:1.9 }}>
+              আপনার আবেদন সফলভাবে জমা হয়েছে।<br/>
+              বিকাশ পেমেন্ট যাচাই করা হচ্ছে।<br/>
+              নিশ্চিত হলে আপনার ইমেইলে জানানো হবে।
+            </p>
+            <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:10, padding:"12px 20px", margin:"16px 0" }}>
+              <div style={{ color:"#888", fontSize:12, marginBottom:4 }}>আপনার আইডি নম্বর</div>
+              <div style={{ color:"#e2c97e", fontSize:20, fontWeight:"bold", letterSpacing:1 }}>{submittedUID}</div>
+            </div>
+            <button onClick={()=>setView("form")} style={{ marginTop:12, background:"linear-gradient(135deg,#c8a84b,#e2c97e)", color:"#0a1628", border:"none", padding:"11px 28px", borderRadius:10, cursor:"pointer", fontFamily:"inherit", fontSize:15, fontWeight:"bold" }}>নতুন নিবন্ধন করুন</button>
+          </div>
+        </div>
+      );
+
+      const inputStyle = (err) => ({
+        width:"100%", padding:"11px 14px", borderRadius:9,
+        background:"rgba(255,255,255,0.06)",
+        border:`1.5px solid ${err?"#f87171":"rgba(255,255,255,0.15)"}`,
+        color:"#fff", fontFamily:"'Noto Serif Bengali',serif", fontSize:14,
+        outline:"none", boxSizing:"border-box"
+      });
+      const labelStyle = { color:"#aac8e8", fontSize:13, marginBottom:5, display:"block", fontWeight:500 };
+      const errStyle = { color:"#f87171", fontSize:12, marginTop:3 };
+      const Section = ({ title, icon }) => (
+        <div style={{ gridColumn:"1 / -1", display:"flex", alignItems:"center", gap:10, borderBottom:"1px solid rgba(226,201,126,0.2)", paddingBottom:8, marginTop:8 }}>
+          <span style={{ fontSize:18 }}>{icon}</span>
+          <span style={{ color:"#e2c97e", fontSize:15, fontWeight:"bold" }}>{title}</span>
+        </div>
+      );
+
+      return (
+        <div style={{ minHeight:"100vh", background:"#0a1628", fontFamily:"'Noto Serif Bengali',serif" }}>
+          {/* Header */}
+          <div style={{ background:"linear-gradient(135deg,#0a2040,#0f2e55,#0a2040)", borderBottom:"2px solid rgba(226,201,126,0.3)", padding:"18px 24px", textAlign:"center", position:"relative" }}>
+            <img src={`data:image/png;base64,${LOGO_B64}`} alt="লোগো" style={{ width:72, height:72, objectFit:"contain", marginBottom:6 }}/>
+            <h1 style={{ color:"#e2c97e", margin:0, fontSize:20, letterSpacing:1 }}>বাংলাদেশ ইসলামী ছাত্রসেনা</h1>
+            <p style={{ color:"#7fc8f8", margin:"4px 0 0", fontSize:13 }}>কর্মী নিবন্ধন ও তথ্য সংরক্ষণ পোর্টাল</p>
+            <button onClick={()=>setShowAdminLogin(true)} style={{ position:"absolute", right:20, top:24, background:"rgba(255,255,255,0.07)", border:"1px solid rgba(226,201,126,0.3)", color:"#e2c97e", padding:"6px 14px", borderRadius:8, cursor:"pointer", fontFamily:"inherit", fontSize:12 }}>🔐 অ্যাডমিন</button>
+          </div>
+
+          {showAdminLogin && (
+            <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.75)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:100 }}>
+              <div style={{ background:"#0f2340", border:"1px solid rgba(226,201,126,0.3)", borderRadius:16, padding:32, width:300, textAlign:"center" }}>
+                <h3 style={{ color:"#e2c97e", margin:"0 0 16px" }}>অ্যাডমিন লগইন</h3>
+                <input type="password" placeholder="পাসওয়ার্ড দিন..." value={adminPass} onChange={e=>setAdminPass(e.target.value)} onKeyDown={e=>e.key==="Enter"&&handleAdminLogin()} style={{ ...inputStyle(adminError), marginBottom:8 }}/>
+                {adminError && <div style={errStyle}>{adminError}</div>}
+                <div style={{ display:"flex", gap:10, marginTop:14 }}>
+                  <button onClick={()=>{setShowAdminLogin(false);setAdminPass("");setAdminError("");}} style={{ flex:1, background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.15)", color:"#ccc", padding:"9px", borderRadius:8, cursor:"pointer", fontFamily:"inherit" }}>বাতিল</button>
+                  <button onClick={handleAdminLogin} style={{ flex:1, background:"linear-gradient(135deg,#c8a84b,#e2c97e)", border:"none", color:"#0a1628", padding:"9px", borderRadius:8, cursor:"pointer", fontFamily:"inherit", fontWeight:"bold" }}>প্রবেশ করুন</button>
+                </div>
+                <div style={{ color:"#555", fontSize:11, marginTop:8 }}>পাসওয়ার্ড: admin1234</div>
+              </div>
+            </div>
+          )}
+
+          <div style={{ maxWidth:760, margin:"24px auto", padding:"0 16px 48px" }}>
+            <div style={{ background:"linear-gradient(160deg,#0f2340,#142e50)", border:"1px solid rgba(226,201,126,0.2)", borderRadius:18, padding:28 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"16px 20px" }}>
+
+                <Section title="ব্যক্তিগত তথ্য" icon="👤"/>
+                <div>
+                  <label style={labelStyle}>পূর্ণ নাম *</label>
+                  <input name="name" value={form.name} onChange={handleChange} placeholder="আপনার পুরো নাম" style={inputStyle(errors.name)}/>
+                  {errors.name && <div style={errStyle}>{errors.name}</div>}
+                </div>
+                <div>
+                  <label style={labelStyle}>পিতার নাম *</label>
+                  <input name="fatherName" value={form.fatherName} onChange={handleChange} placeholder="পিতার নাম" style={inputStyle(errors.fatherName)}/>
+                  {errors.fatherName && <div style={errStyle}>{errors.fatherName}</div>}
+                </div>
+                <div style={{ gridColumn:"1 / -1" }}>
+                  <label style={labelStyle}>ইমেইল ঠিকানা *</label>
+                  <input name="email" value={form.email} onChange={handleChange} placeholder="example@email.com" type="email" style={inputStyle(errors.email)}/>
+                  {errors.email && <div style={errStyle}>{errors.email}</div>}
+                </div>
+                <div>
+                  <label style={labelStyle}>বর্তমান ঠিকানা *</label>
+                  <textarea name="presentAddress" value={form.presentAddress} onChange={handleChange} placeholder="গ্রাম/মহল্লা, থানা, জেলা" rows={2} style={{ ...inputStyle(errors.presentAddress), resize:"none" }}/>
+                  {errors.presentAddress && <div style={errStyle}>{errors.presentAddress}</div>}
+                </div>
+                <div>
+                  <label style={labelStyle}>স্থায়ী ঠিকানা *</label>
+                  <textarea name="permanentAddress" value={form.permanentAddress} onChange={handleChange} placeholder="গ্রাম/মহল্লা, থানা, জেলা" rows={2} style={{ ...inputStyle(errors.permanentAddress), resize:"none" }}/>
+                  {errors.permanentAddress && <div style={errStyle}>{errors.permanentAddress}</div>}
+                </div>
+
+                <Section title="সাংগঠনিক তথ্য" icon="🏛️"/>
+                <div>
+                  <label style={labelStyle}>দায়িত্বরত শাখা *</label>
+                  <input name="branch" value={form.branch} onChange={handleChange} placeholder="শাখার নাম" style={inputStyle(errors.branch)}/>
+                  {errors.branch && <div style={errStyle}>{errors.branch}</div>}
+                </div>
+                <div>
+                  <label style={labelStyle}>পদবী *</label>
+                  <select name="designation" value={form.designation} onChange={handleChange} style={{ ...inputStyle(errors.designation), appearance:"none" }}>
+                    <option value="">-- পদবী নির্বাচন করুন --</option>
+                    {designations.map(d=><option key={d} value={d}>{d}</option>)}
+                  </select>
+                  {errors.designation && <div style={errStyle}>{errors.designation}</div>}
+                </div>
+                <div>
+                  <label style={labelStyle}>সভাপতির নাম *</label>
+                  <input name="presidentName" value={form.presidentName} onChange={handleChange} placeholder="সভাপতির নাম" style={inputStyle(errors.presidentName)}/>
+                  {errors.presidentName && <div style={errStyle}>{errors.presidentName}</div>}
+                </div>
+                <div>
+                  <label style={labelStyle}>সভাপতির মোবাইল *</label>
+                  <input name="presidentPhone" value={form.presidentPhone} onChange={handleChange} placeholder="০১XXXXXXXXX" style={inputStyle(errors.presidentPhone)}/>
+                  {errors.presidentPhone && <div style={errStyle}>{errors.presidentPhone}</div>}
+                </div>
+                <div style={{ gridColumn:"1 / -1" }}>
+                  <label style={labelStyle}>অনুগামী হয়েছেন? *</label>
+                  <div style={{ display:"flex", gap:16 }}>
+                    {["হ্যাঁ","না"].map(opt=>(
+                      <label key={opt} style={{ display:"flex", alignItems:"center", gap:8, background:form.isFollower===opt?"rgba(226,201,126,0.15)":"rgba(255,255,255,0.05)", border:`1.5px solid ${form.isFollower===opt?"#e2c97e":"rgba(255,255,255,0.1)"}`, borderRadius:8, padding:"9px 20px", cursor:"pointer", color:"#ccc", fontSize:14 }}>
+                        <input type="radio" name="isFollower" value={opt} checked={form.isFollower===opt} onChange={handleChange} style={{ accentColor:"#e2c97e" }}/>
+                        {opt}
+                      </label>
+                    ))}
+                  </div>
+                  {errors.isFollower && <div style={errStyle}>{errors.isFollower}</div>}
+                </div>
+
+                <Section title="ছবি আপলোড" icon="📷"/>
+                <div style={{ gridColumn:"1 / -1" }}>
+                  <label style={labelStyle}>নিজের ছবি আপলোড করুন</label>
+                  <div style={{ border:"2px dashed rgba(226,201,126,0.3)", borderRadius:12, padding:18, background:"rgba(255,255,255,0.03)", display:"flex", alignItems:"center", gap:20 }}>
+                    {form.photoPreview && <img src={form.photoPreview} alt="preview" style={{ width:80, height:80, objectFit:"cover", borderRadius:8, border:"2px solid #e2c97e" }}/>}
+                    <div style={{ flex:1 }}>
+                      <div style={{ color:"#7fc8f8", marginBottom:8, fontSize:13 }}>{form.photo?`✅ ${form.photo}`:"📤 ছবি নির্বাচন করুন (JPG, PNG)"}</div>
+                      <input type="file" accept="image/*" onChange={handlePhoto} style={{ color:"#aac8e8", fontFamily:"inherit", fontSize:13 }}/>
+                    </div>
+                  </div>
+                </div>
+
+                <Section title="বিকাশ পেমেন্ট" icon="💳"/>
+                <div style={{ gridColumn:"1 / -1" }}>
+                  <div style={{ background:"linear-gradient(135deg,#1a3a1a,#0f2a10)", border:"1px solid rgba(93,222,138,0.3)", borderRadius:12, padding:16, marginBottom:14 }}>
+                    <div style={{ color:"#5dde8a", fontWeight:"bold", fontSize:14, marginBottom:8 }}>📲 বিকাশে টাকা পাঠানোর নির্দেশনা</div>
+                    <div style={{ color:"#aac8e8", fontSize:13, lineHeight:2 }}>
+                      ১. বিকাশ অ্যাপ বা *২৪৭# ডায়াল করুন<br/>
+                      ২. <strong style={{ color:"#e2c97e" }}>Send Money</strong> বেছে নিন<br/>
+                      ৩. নম্বর: <strong style={{ color:"#e2c97e", fontSize:16 }}>{BKASH_NUMBER}</strong><br/>
+                      ৪. নির্ধারিত পরিমাণ পাঠান ও নিচে পূরণ করুন
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label style={labelStyle}>পাঠানো পরিমাণ (৳) *</label>
+                  <input name="bkashAmount" value={form.bkashAmount} onChange={handleChange} placeholder="যেমন: ৫০০" style={inputStyle(errors.bkashAmount)} type="number"/>
+                  {errors.bkashAmount && <div style={errStyle}>{errors.bkashAmount}</div>}
+                </div>
+                <div>
+                  <label style={labelStyle}>ট্রানজেকশন আইডি *</label>
+                  <input name="transactionId" value={form.transactionId} onChange={handleChange} placeholder="TX নম্বর..." style={inputStyle(errors.transactionId)}/>
+                  {errors.transactionId && <div style={errStyle}>{errors.transactionId}</div>}
+                </div>
+                <div style={{ gridColumn:"1 / -1" }}>
+                  <label style={labelStyle}>পেমেন্টের তারিখ *</label>
+                  <input name="transactionDate" value={form.transactionDate} onChange={handleChange} type="date" style={{ ...inputStyle(errors.transactionDate), colorScheme:"dark" }}/>
+                  {errors.transactionDate && <div style={errStyle}>{errors.transactionDate}</div>}
+                </div>
+              </div>
+
+              <button onClick={handleSubmit} style={{ width:"100%", marginTop:24, background:"linear-gradient(135deg,#c8a84b,#e2c97e,#c8a84b)", border:"none", color:"#0a1628", padding:"14px", borderRadius:12, cursor:"pointer", fontFamily:"'Noto Serif Bengali',serif", fontSize:16, fontWeight:"bold", boxShadow:"0 4px 20px rgba(226,201,126,0.3)" }}>
+                ✅ নিবন্ধন জমা দিন
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
