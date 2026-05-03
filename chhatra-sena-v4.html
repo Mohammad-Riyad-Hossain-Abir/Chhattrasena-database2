@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>বাংলাদেশ ইসলামী ছাত্রসেনা - নিবন্ধন পোর্টাল</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- React & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  
+  <!-- Babel for JSX transpilation in browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0a1628;
+      font-family: 'Noto Serif Bengali', serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const BKASH_NUMBER = "01521788397";
+    const LOGO_B64 = "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) + "==";
+
+    const initialForm = {
+      name: "", fatherName: "", email: "",
+      presentAddress: "", permanentAddress: "",
+      branch: "", designation: "", otherDesignation: "",
+      presidentName: "", presidentPhone: "",
+      photo: null, photoPreview: null,
+      isFollower: "", followerDate: "",
+      isSohogami: "", sohogamiDate: "",
+      isShovvo: "", shovvoDate: "",
+      bkashAmount: "", transactionId: "", transactionDate: "",
+    };
+
+    const designations = [
+      "সভাপতি", "সহ-সভাপতি", "সাধারণ সম্পাদক", "সহ-সাধারণ সম্পাদক",
+      "সাংগঠনিক সম্পাদক", "সহ-সাংগঠনিক সম্পাদক", "অর্থ সম্পাদক", "সহ-অর্থ সম্পাদক",
+      "দপ্তর সম্পাদক", "প্রচার ও প্রকাশনা সম্পাদক", "সহ-প্রচার ও প্রকাশনা সম্পাদক",
+      "তথ্য ও প্রযুক্তি সম্পাদক", "সাহিত্য ও সাংস্কৃতিক বিষয়ক সম্পাদক",
+      "আন্তর্জাতিক বিষয়ক সম্পাদক", "আইন বিষয়ক সম্পাদক", "মুক্তিযুদ্ধ বিষয়ক সম্পাদক",
+      "সমাজকল্যাণ সম্পাদক", "ছাত্রকল্যাণ সম্পাদক", "বিশ্ববিদ্যালয় বিষয়ক সম্পাদক",
+      "মাদ্রাসা বিষয়ক সম্পাদক", "স্কুল বিষয়ক সম্পাদক", "শাখা বিষয়ক সম্পাদক",
+      "সদস্য", "কর্মী", "অন্যান্য"
+    ];
+
+    function generateUID() {
+      return "ICS-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).substr(2,4).toUpperCase();
+    }
+
+    const dummyStorage = {
+      get: async (key) => ({ value: localStorage.getItem(key) }),
+      set: async (key, value) => { localStorage.setItem(key, value); }
+    };
+    const storage = window.storage || dummyStorage;
+
+    function AdminPanel({ members, onBack, onConfirmPayment }) {
+      const [search, setSearch] = useState("");
+      const [tab, setTab] = useState("pending");
+      const confirmed = members.filter(m => m.paymentConfirmed);
+      const pending = members.filter(m => !m.paymentConfirmed);
+      const list = tab === "confirmed" ? confirmed : pending;
+      const filtered = list.filter(m =>
+        m.name?.toLowerCase().includes(search.toLowerCase()) ||
+        m.branch?.toLowerCase().includes(search.toLowerCase()) ||
+        m.uid?.toLowerCase().includes(search.toLowerCase())
+      );
+
+      return (
+        <div style={{ minHeight:"100vh", background:"#0a1628", padding:"24px", fontFamily:"'Noto Serif Bengali',serif" }}>
+          <div style={{ maxWidth:1100, margin:"0 auto" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:24 }}>
+              <button onClick={onBack} style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", color:"#e2c97e", padding:"8px 18px", borderRadius:8, cursor:"pointer", fontFamily:"inherit", fontSize:14 }}>← ফিরে যান</button>
+              <h2 style={{ color:"#e2c97e", margin:0, fontSize:20 }}>অ্যাডমিন ড্যাশবোর্ড</h2>
+            </div>
+
+            <div style={{ display:"flex", gap:8, marginBottom:16 }}>
+              {["pending","confirmed"].map(t => (
+                <button key={t} onClick={()=>setTab(t)} style={{
+                  padding:"8px 20px", borderRadius:8, cursor:"pointer", fontFamily:"inherit", fontSize:14,
+                  background: tab===t ? "linear-gradient(135deg,#c8a84b,#e2c97e)" : "rgba(255,255,255,0.07)",
+                  border: tab===t ? "none" : "1px solid rgba(255,255,255,0.15)",
+                  color: tab===t ? "#0a1628" : "#ccc", fontWeight: tab===t ? "bold" : "normal"
+                }}>
+                  {t==="pending" ? `⏳ অপেক্ষমাণ (${pending.length})` : `✅ নিশ্চিত (${confirmed.length})`}
+                </button>
+              ))}
+            </div>
+
+            <input placeholder="নাম, শাখা বা আইডি দিয়ে খুঁজুন..." value={search} onChange={e=>setSearch(e.target.value)}
+              style={{ width:"100%", padding:"10px 16px", borderRadius:8, marginBottom:16, background:"rgba(255,255,255,0.07)", border:"1px solid rgba(255,255,255,0.15)", color:"#fff", fontFamily:"inherit", fontSize:14, boxSizing:"border-box" }}/>
+
+            <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+              {filtered.map((m,i) => (
+                <div key={i} style={{ background:"linear-gradient(135deg,#0f2340,#152d4a)", border:`1px solid ${m.paymentConfirmed?"rgba(93,222,138,0.3)":"rgba(248,200,126,0.3)"}`, borderRadius:12, padding:18, display:"grid", gridTemplateColumns:"72px 1fr 1fr 1fr", gap:14, alignItems:"start" }}>
+                  <div>
+                    {m.photoPreview ? (
+                      <img src={m.photoPreview} alt="ছবি" style={{ width:64, height:64, borderRadius:8, objectFit:"cover", border:"2px solid #e2c97e" }}/>
+                    ) : (
+                      <div style={{ width:64, height:64, borderRadius:8, background:"#1a3a5c", display:"flex", alignItems:"center", justifyContent:"center", color:"#7fc8f8", fontSize:24 }}>👤</div>
+                    )}
+                    <div style={{ fontSize:10, color:"#888", marginTop:4, textAlign:"center", wordBreak:"break-all" }}>{m.uid}</div>
+                  </div>
+                  <div>
+                    <div style={{ color:"#e2c97e", fontWeight:"bold", fontSize:15, marginBottom:3 }}>{m.name}</div>
+                    <div style={{ color:"#7fc8f8", fontSize:12 }}>পদবী: {m.designation === "অন্যান্য" ? m.otherDesignation : m.designation}</div>
+                    <div style={{ color:"#aac8e8", fontSize:12 }}>শাখা: {m.branch}</div>
+                  </div>
+                  <div>
+                    <div style={{ color:"#ccc", fontSize:11 }}><span style={{ color:"#888" }}>অনুগামী: </span>{m.isFollower}{m.followerDate ? ` (${m.followerDate})` : ""}</div>
+                    <div style={{ color:"#ccc", fontSize:11 }}><span style={{ color:"#888" }}>সহগামী: </span>{m.isSohogami}{m.sohogamiDate ? ` (${m.sohogamiDate})` : ""}</div>
+                    <div style={{ color:"#ccc", fontSize:11 }}><span style={{ color:"#888" }}>সভ্য: </span>{m.isShovvo}{m.shovvoDate ? ` (${m.shovvoDate})` : ""}</div>
+                  </div>
+                  <div>
+                    <div style={{ background:"rgba(226,201,126,0.08)", border:"1px solid rgba(226,201,126,0.2)", borderRadius:8, padding:"10px 12px", marginBottom:8 }}>
+                      <div style={{ color:"#e2c97e", fontSize:12 }}>৳{m.bkashAmount} | TX: {m.transactionId}</div>
+                    </div>
+                    {!m.paymentConfirmed && (
+                      <button onClick={()=>onConfirmPayment(m.uid)} style={{ width:"100%", background:"linear-gradient(135deg,#c8a84b,#e2c97e)", border:"none", color:"#0a1628", padding:"8px 12px", borderRadius:8, cursor:"pointer", fontFamily:"inherit", fontSize:13, fontWeight:"bold" }}>নিশ্চিত করুন</button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const [form, setForm] = useState(initialForm);
+      const [members, setMembers] = useState([]);
+      const [view, setView] = useState("form");
+      const [errors, setErrors] = useState({});
+      const [adminPass, setAdminPass] = useState("");
+      const [showAdminLogin, setShowAdminLogin] = useState(false);
+      const [adminError, setAdminError] = useState("");
+      const [submittedUID, setSubmittedUID] = useState("");
+
+      useEffect(() => {
+        (async () => {
+          try {
+            const res = await storage.get("ics_members_v2");
+            if (res?.value) setMembers(JSON.parse(res.value));
+          } catch {}
+        })();
+      }, []);
+
+      const saveMembers = async (list) => {
+        try { await storage.set("ics_members_v2", JSON.stringify(list)); } catch {}
+      };
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm(f => ({ ...f, [name]: value }));
+        setErrors(er => ({ ...er, [name]: "" }));
+      };
+
+      const handlePhoto = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => setForm(f => ({ ...f, photo: file.name, photoPreview: ev.target.result }));
+        reader.readAsDataURL(file);
+      };
+
+      const validate = () => {
+        const e = {};
+        if (!form.name.trim()) e.name = "নাম আবশ্যক";
+        if (!form.fatherName.trim()) e.fatherName = "পিতার নাম আবশ্যক";
+        if (!form.email.trim()) e.email = "ইমেইল আবশ্যক";
+        if (!form.branch.trim()) e.branch = "শাখার নাম আবশ্যক";
+        if (!form.designation) e.designation = "পদবী নির্বাচন করুন";
+        if (form.designation === "অন্যান্য" && !form.otherDesignation.trim()) e.otherDesignation = "পদের নাম লিখুন";
+        if (!form.isFollower) e.isFollower = "নির্বাচন করুন";
+        if (!form.isSohogami) e.isSohogami = "নির্বাচন করুন";
+        if (!form.isShovvo) e.isShovvo = "নির্বাচন করুন";
+        if (!form.transactionId.trim()) e.transactionId = "TX নম্বর আবশ্যক";
+        return e;
+      };
+
+      const handleSubmit = async () => {
+        const e = validate();
+        if (Object.keys(e).length > 0) { setErrors(e); return; }
+        const uid = generateUID();
+        const newMember = { ...form, uid, paymentConfirmed: false, submittedAt: new Date().toLocaleString("bn-BD") };
+        const updated = [...members, newMember];
+        setMembers(updated);
+        await saveMembers(updated);
+        setSubmittedUID(uid);
+        setForm(initialForm);
+        setView("pending");
+      };
+
+      const handleConfirmPayment = async (uid) => {
+        const updated = members.map(m => m.uid === uid ? { ...m, paymentConfirmed: true } : m);
+        setMembers(updated);
+        await saveMembers(updated);
+      };
+
+      const handleAdminLogin = () => {
+        if (adminPass === "admin1234") {
+          setView("admin"); setShowAdminLogin(false); setAdminPass(""); setAdminError("");
+        } else { setAdminError("ভুল পাসওয়ার্ড!"); }
+      };
+
+      if (view === "admin") return <AdminPanel members={members} onBack={()=>setView("form")} onConfirmPayment={handleConfirmPayment}/>;
+
+      if (view === "pending") return (
+        <div style={{ minHeight:"100vh", background:"#0a1628", display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"'Noto Serif Bengali',serif" }}>
+          <div style={{ background:"linear-gradient(135deg,#0f2340,#152d4a)", border:"2px solid rgba(248,200,126,0.4)", borderRadius:20, padding:48, textAlign:"center", maxWidth:440 }}>
+            <div style={{ fontSize:56, marginBottom:16 }}>⏳</div>
+            <h2 style={{ color:"#f8c87e", fontSize:22, marginBottom:12 }}>আবেদন জমা হয়েছে</h2>
+            <div style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:10, padding:"12px 20px", margin:"16px 0" }}>
+              <div style={{ color:"#888", fontSize:12, marginBottom:4 }}>আপনার আইডি নম্বর</div>
+              <div style={{ color:"#e2c97e", fontSize:20, fontWeight:"bold" }}>{submittedUID}</div>
+            </div>
+            <button onClick={()=>setView("form")} style={{ background:"linear-gradient(135deg,#c8a84b,#e2c97e)", color:"#0a1628", border:"none", padding:"11px 28px", borderRadius:10, cursor:"pointer", fontFamily:"inherit", fontWeight:"bold" }}>ফিরে যান</button>
+          </div>
+        </div>
+      );
+
+      const inputStyle = (err) => ({
+        width:"100%", padding:"11px 14px", borderRadius:9, background:"rgba(255,255,255,0.06)",
+        border:`1.5px solid ${err?"#f87171":"rgba(255,255,255,0.15)"}`,
+        color:"#fff", fontFamily:"'Noto Serif Bengali',serif", fontSize:14, outline:"none", boxSizing:"border-box"
+      });
+      const labelStyle = { color:"#aac8e8", fontSize:13, marginBottom:5, display:"block", fontWeight:500 };
+      const errStyle = { color:"#f87171", fontSize:12, marginTop:3 };
+      const Section = ({ title, icon }) => (
+        <div style={{ gridColumn:"1 / -1", display:"flex", alignItems:"center", gap:10, borderBottom:"1px solid rgba(226,201,126,0.2)", paddingBottom:8, marginTop:8 }}>
+          <span style={{ fontSize:18 }}>{icon}</span>
+          <span style={{ color:"#e2c97e", fontSize:15, fontWeight:"bold" }}>{title}</span>
+        </div>
+      );
+
+      return (
+        <div style={{ minHeight:"100vh", background:"#0a1628", fontFamily:"'Noto Serif Bengali',serif" }}>
+          <div style={{ background:"linear-gradient(135deg,#0a2040,#0f2e55,#0a2040)", borderBottom:"2px solid rgba(226,201,126,0.3)", padding:"18px 24px", textAlign:"center", position:"relative" }}>
+            <img src={`data:image/png;base64,${LOGO_B64}`} alt="লোগো" style={{ width:72, height:72, objectFit:"contain", marginBottom:6 }}/>
+            <h1 style={{ color:"#e2c97e", margin:0, fontSize:20 }}>বাংলাদেশ ইসলামী ছাত্রসেনা</h1>
+            <button onClick={()=>setShowAdminLogin(true)} style={{ position:"absolute", right:20, top:24, background:"rgba(255,255,255,0.07)", border:"1px solid rgba(226,201,126,0.3)", color:"#e2c97e", padding:"6px 14px", borderRadius:8, cursor:"pointer", fontSize:12 }}>🔐 অ্যাডমিন</button>
+          </div>
+
+          {showAdminLogin && (
+            <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.75)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:100 }}>
+              <div style={{ background:"#0f2340", border:"1px solid rgba(226,201,126,0.3)", borderRadius:16, padding:32, width:300, textAlign:"center" }}>
+                <h3 style={{ color:"#e2c97e", margin:"0 0 16px" }}>অ্যাডমিন লগইন</h3>
+                <input type="password" placeholder="পাসওয়ার্ড..." value={adminPass} onChange={e=>setAdminPass(e.target.value)} style={{ ...inputStyle(adminError), marginBottom:8 }}/>
+                <button onClick={handleAdminLogin} style={{ width:"100%", background:"linear-gradient(135deg,#c8a84b,#e2c97e)", border:"none", padding:"9px", borderRadius:8, cursor:"pointer", fontWeight:"bold" }}>প্রবেশ করুন</button>
+                <button onClick={()=>setShowAdminLogin(false)} style={{ marginTop:8, color:"#888", background:"none", border:"none", cursor:"pointer" }}>বাতিল</button>
+              </div>
+            </div>
+          )}
+
+          <div style={{ maxWidth:760, margin:"24px auto", padding:"0 16px 48px" }}>
+            <div style={{ background:"linear-gradient(160deg,#0f2340,#142e50)", border:"1px solid rgba(226,201,126,0.2)", borderRadius:18, padding:28 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"16px 20px" }}>
+                <Section title="ব্যক্তিগত তথ্য" icon="👤"/>
+                <div>
+                  <label style={labelStyle}>পূর্ণ নাম *</label>
+                  <input name="name" value={form.name} onChange={handleChange} placeholder="আপনার নাম" style={inputStyle(errors.name)}/>
+                  {errors.name && <div style={errStyle}>{errors.name}</div>}
+                </div>
+                <div>
+                  <label style={labelStyle}>পিতার নাম *</label>
+                  <input name="fatherName" value={form.fatherName} onChange={handleChange} placeholder="পিতার নাম" style={inputStyle()}/>
+                </div>
+                <div style={{ gridColumn:"1 / -1" }}>
+                  <label style={labelStyle}>ইমেইল ঠিকানা *</label>
+                  <input name="email" value={form.email} onChange={handleChange} placeholder="example@email.com" type="email" style={inputStyle()}/>
+                </div>
+                <div>
+                  <label style={labelStyle}>বর্তমান ঠিকানা *</label>
+                  <textarea name="presentAddress" value={form.presentAddress} onChange={handleChange} rows={2} style={{ ...inputStyle(), resize:"none" }}/>
+                </div>
+                <div>
+                  <label style={labelStyle}>স্থায়ী ঠিকানা *</label>
+                  <textarea name="permanentAddress" value={form.permanentAddress} onChange={handleChange} rows={2} style={{ ...inputStyle(), resize:"none" }}/>
+                </div>
+
+                <Section title="সাংগঠনিক তথ্য" icon="🏛️"/>
+                <div>
+                  <label style={labelStyle}>দায়িত্বরত শাখা *</label>
+                  <input name="branch" value={form.branch} onChange={handleChange} placeholder="শাখার নাম" style={inputStyle()}/>
+                </div>
+                <div>
+                  <label style={labelStyle}>পদবী *</label>
+                  <select name="designation" value={form.designation} onChange={handleChange} style={inputStyle(errors.designation)}>
+                    <option value="">-- নির্বাচন করুন --</option>
+                    {designations.map(d=><option key={d} value={d}>{d}</option>)}
+                  </select>
+                </div>
+                {form.designation === "অন্যান্য" && (
+                  <div style={{ gridColumn:"1 / -1" }}>
+                    <label style={labelStyle}>অন্যান্য হলে সেই পদের নাম লিখুন *</label>
+                    <input name="otherDesignation" value={form.otherDesignation} onChange={handleChange} placeholder="পদের নাম লিখুন" style={inputStyle()}/>
+                  </div>
+                )}
+                <div>
+                  <label style={labelStyle}>সভাপতির নাম *</label>
+                  <input name="presidentName" value={form.presidentName} onChange={handleChange} style={inputStyle()}/>
+                </div>
+                <div>
+                  <label style={labelStyle}>সভাপতির মোবাইল *</label>
+                  <input name="presidentPhone" value={form.presidentPhone} onChange={handleChange} style={inputStyle()}/>
+                </div>
+
+                <div style={{ gridColumn:"1 / -1", display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
+                  <div>
+                    <label style={labelStyle}>অনুগামী হয়েছেন? *</label>
+                    <select name="isFollower" value={form.isFollower} onChange={handleChange} style={inputStyle(errors.isFollower)}>
+                      <option value="">-- নির্বাচন করুন --</option>
+                      <option value="হ্যাঁ">হ্যাঁ</option>
+                      <option value="না">না</option>
+                    </select>
+                    {form.isFollower === "হ্যাঁ" && (
+                      <div style={{ marginTop: 8 }}>
+                        <label style={labelStyle}>অনুগামী কবে হয়েছেন? *</label>
+                        <input name="followerDate" value={form.followerDate} onChange={handleChange} type="date" style={{ ...inputStyle(), colorScheme:"dark" }}/>
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <label style={labelStyle}>সহগামী হয়েছেন? *</label>
+                    <select name="isSohogami" value={form.isSohogami} onChange={handleChange} style={inputStyle(errors.isSohogami)}>
+                      <option value="">-- নির্বাচন করুন --</option>
+                      <option value="হ্যাঁ">হ্যাঁ</option>
+                      <option value="না">না</option>
+                    </select>
+                    {form.isSohogami === "হ্যাঁ" && (
+                      <div style={{ marginTop: 8 }}>
+                        <label style={labelStyle}>সহগামী কবে হয়েছেন? *</label>
+                        <input name="sohogamiDate" value={form.sohogamiDate} onChange={handleChange} type="date" style={{ ...inputStyle(), colorScheme:"dark" }}/>
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ gridColumn: "1 / -1" }}>
+                    <label style={labelStyle}>সভ্য হয়েছেন? *</label>
+                    <select name="isShovvo" value={form.isShovvo} onChange={handleChange} style={inputStyle(errors.isShovvo)}>
+                      <option value="">-- নির্বাচন করুন --</option>
+                      <option value="হ্যাঁ">হ্যাঁ</option>
+                      <option value="না">না</option>
+                    </select>
+                    {form.isShovvo === "হ্যাঁ" && (
+                      <div style={{ marginTop: 8 }}>
+                        <label style={labelStyle}>সভ্য কবে হয়েছেন? *</label>
+                        <input name="shovvoDate" value={form.shovvoDate} onChange={handleChange} type="date" style={{ ...inputStyle(), colorScheme:"dark" }}/>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <Section title="ছবি আপলোড" icon="📷"/>
+                <div style={{ gridColumn:"1 / -1" }}>
+                  <label style={labelStyle}>নিজের ছবি আপলোড করুন</label>
+                  <div style={{ border:"2px dashed rgba(226,201,126,0.3)", borderRadius:12, padding:18, background:"rgba(255,255,255,0.03)", display:"flex", alignItems:"center", gap:20 }}>
+                    {form.photoPreview && <img src={form.photoPreview} alt="preview" style={{ width:80, height:80, objectFit:"cover", borderRadius:8, border:"2px solid #e2c97e" }}/>}
+                    <div style={{ flex:1 }}>
+                      <div style={{ color:"#7fc8f8", marginBottom:8, fontSize:13 }}>{form.photo?`✅ ${form.photo}`:"📤 ছবি নির্বাচন করুন (JPG, PNG)"}</div>
+                      <input type="file" accept="image/*" onChange={handlePhoto} style={{ color:"#aac8e8", fontFamily:"inherit", fontSize:13 }}/>
+                    </div>
+                  </div>
+                </div>
+
+                <Section title="বিকাশ পেমেন্ট" icon="💳"/>
+                <div style={{ gridColumn:"1 / -1" }}>
+                  <div style={{ background:"linear-gradient(135deg,#1a3a1a,#0f2a10)", border:"1px solid rgba(93,222,138,0.3)", borderRadius:12, padding:16, marginBottom:14 }}>
+                    <div style={{ color:"#5dde8a", fontWeight:"bold", fontSize:14, marginBottom:8 }}>📲 বিকাশে টাকা পাঠানোর নির্দেশনা</div>
+                    <div style={{ color:"#aac8e8", fontSize:13, lineHeight:2 }}>
+                      ১. বিকাশ অ্যাপ বা *২৪৭# ডায়াল করুন<br/>
+                      ২. <strong style={{ color:"#e2c97e" }}>Send Money</strong> বেছে নিন<br/>
+                      ৩. নম্বর: <strong style={{ color:"#e2c97e", fontSize:16 }}>{BKASH_NUMBER}</strong><br/>
+                      ৪. নির্ধারিত পরিমাণ পাঠান ও নিচে পূরণ করুন
+                    </div>
+                  </div>
+                  <div style={{ display:"flex", gap:10 }}>
+                    <div style={{ flex: 1 }}>
+                      <label style={labelStyle}>পাঠানো পরিমাণ (৳) *</label>
+                      <input name="bkashAmount" value={form.bkashAmount} onChange={handleChange} placeholder="৳" style={inputStyle()} type="number"/>
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <label style={labelStyle}>ট্রানজেকশন আইডি *</label>
+                      <input name="transactionId" value={form.transactionId} onChange={handleChange} placeholder="TX ID" style={inputStyle(errors.transactionId)}/>
+                    </div>
+                  </div>
+                  <div style={{ marginTop: 12 }}>
+                    <label style={labelStyle}>পেমেন্টের তারিখ *</label>
+                    <input name="transactionDate" value={form.transactionDate} onChange={handleChange} type="date" style={{ ...inputStyle(), colorScheme:"dark" }}/>
+                  </div>
+                </div>
+              </div>
+              <button onClick={handleSubmit} style={{ width:"100%", marginTop:24, background:"linear-gradient(135deg,#c8a84b,#e2c97e)", border:"none", padding:"14px", borderRadius:12, cursor:"pointer", fontSize:16, fontWeight:"bold" }}>✅ নিবন্ধন জমা দিন</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
