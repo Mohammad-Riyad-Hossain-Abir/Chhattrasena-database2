@@ -339,11 +339,16 @@
                   {errors.branch && <div style={errStyle}>{errors.branch}</div>}
                 </div>
                 <div>
-                  <label style={labelStyle}>পদবী *</label>
-                  <select name="designation" value={form.designation} onChange={handleChange} style={{ ...inputStyle(errors.designation), appearance:"none" }}>
-                    <option value="">-- পদবী নির্বাচন করুন --</option>
-                    {designations.map(d=><option key={d} value={d}>{d}</option>)}
-                  </select>
+                  
+                        <label style={labelStyle}>পদবী *</label>
+                        <select name="designation" onChange={handleChange} style={inputStyle}>
+                            <option value="">নির্বাচন করুন</option>
+                            {designations.map(d => <option key={d} value={d}>{d}</option>)}
+                        </select>
+
+                        {form.designation === "অন্যান্য" && (
+                            <input name="otherDesignation" onChange={handleChange} style={inputStyle} placeholder="পদের নাম লিখুন" />
+                        )                
                   {errors.designation && <div style={errStyle}>{errors.designation}</div>}
                 </div>
                 <div>
